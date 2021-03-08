@@ -75,6 +75,7 @@ void calcMatchPlanning(vector<team> teams,vector<vector<pair<int,int>>> &matches
         }
     }
 }
+
 // pair<int,int> **calcMatchPlanning(vector<team> teams,matches)
 // {
 

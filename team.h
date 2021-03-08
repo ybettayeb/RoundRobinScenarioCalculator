@@ -63,6 +63,13 @@ public:
     {
         return t1.wins < t2.wins;
     }
+        friend bool operator>(const team &t1,const team &t2)
+    {
+        return t1.wins > t2.wins;
+    }
+    friend bool operator==(const team &t1, const team &t2){
+        return t1.Name == t2.Name;
+    }
 };
    
 #endif

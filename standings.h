@@ -11,20 +11,11 @@ protected:
     std::vector<team> teams;
 public:
     standings(std::vector<team> teams);
+
+    friend bool operator==(const standings &s1, const standings &s2){
+    return s1.teams == s2.teams;
+    }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #endif
