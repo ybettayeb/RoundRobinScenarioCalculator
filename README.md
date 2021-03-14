@@ -12,6 +12,7 @@ The creation and root to leaf path could probably be combined into one function 
 Most of the driver code is sadly in the main.cpp but at some point i got too lazy to keep everything nice and tidy. Promise i'll refactor it. 
 
 What's left to do : 
+## ADD A MAKEFILE YOU DUMBAS
 code refactoring
 translating tree's path into standings objects => easy, count the number of times each teams number appears in a path and update the scores accordingly
 Counting "similar scenarios" I.E paths that ends with the same standings => Easy
