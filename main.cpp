@@ -94,8 +94,8 @@ void calcMatchPlanning(vector<team> teams, vector<vector<pair<int, int>>> &match
     {
         for (int match = 0; match < matchNumbers; match++)
         {
-            int home = (round + match) % (nbTeams - 1);
-            int away = (nbTeams - 1 - match + round) % (nbTeams - 1);
+            int home = (round + match) % (nbTeams - 1); // #1st team plays last 2nd team plays against before last so on so forth 
+            int away = (nbTeams - 1 - match + round) % (nbTeams - 1); // we're thus, congruent to the nb teams -1, except the first team that will never move 
             if (match == 0)
             {
                 away = nbTeams - 1;
