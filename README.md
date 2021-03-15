@@ -12,14 +12,14 @@ The creation and root to leaf path could probably be combined into one function 
 Most of the driver code is sadly in the main.cpp but at some point i got too lazy to keep everything nice and tidy. Promise i'll refactor it. 
 
 What's left to do : 
-## ADD A MAKEFILE YOU DUMBASS
-code refactoring
-translating tree's path into standings objects => easy, count the number of times each teams number appears in a path and update the scores accordingly
-Counting "similar scenarios" I.E paths that ends with the same standings => Easy
-Computing the odds of said scenarios => Easy 
-Taking tie breakers in account => Moderate, need to get every team with same score and then add matches accordingly
+* ## ADD A MAKEFILE YOU DUMBASS
+* code refactoring
+* translating tree's path into standings objects => easy : count the number of times each teams number appears in a path and update the scores accordingly
+* Counting "similar scenarios" I.E paths that ends with the same standings => Easy, just overload == operator for 2 standings 
+* Computing the odds of said scenarios => Easy 
+* Taking tie breakers into account => Moderate, need to get every team with same score and then add matches accordingly
 
 possible features :
-Compute a "win probability" for each team and each match according to previous match history 
-Scrap current standings from a website.
-maybe implement the whole thing iteratively. 
+* Compute a "win probability" for each team and each match according to previous match history 
+* Scrap current standings from a website.
+* maybe implement the whole thing iteratively, because recursion is fun until it eats all of your 32 gb of ram 
