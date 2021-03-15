@@ -11,8 +11,12 @@ The creation and root to leaf path could probably be combined into one function 
 
 Most of the driver code is sadly in the main but at some point i got too lazy to keep everything nice and tidy. Promise i'll refactor it. 
 
+Just compile all the .cpp files, add a csv named "Teams.csv" with your standings in this format "TeamName;Wins;Losses" 
+
 What's left to do : 
 * ## ADD A MAKEFILE YOU DUMBASS🤦‍♂️ 
+* pass the csv file as an arg
+* Display computing progress because recursion is my nightmare
 * Add compiled files to gitignore 🤦‍♂️ 
 * code refactoring
 * translating tree's path into standings objects => easy : count the number of times each teams number appears in a path and update the scores accordingly
@@ -24,3 +28,7 @@ possible features :
 * Compute a "win probability" for each team and each match according to previous match history => moderately unlikely 
 * Scrap current standings from a website.
 * maybe implement the whole thing iteratively, because recursion is fun until it eats all of your 32 gb of ram 
+
+
+
+Currentl
