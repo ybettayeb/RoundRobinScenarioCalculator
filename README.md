@@ -9,10 +9,11 @@ The tree is made with it's level order traversal, generated with a dumb iterativ
 each path from root to leaf represents a possible outcome, so we recursively print all the root to leaf paths.
 The creation and root to leaf path could probably be combined into one function generating the tree and the paths on the go. 
 
-Most of the driver code is sadly in the main.cpp but at some point i got too lazy to keep everything nice and tidy. Promise i'll refactor it. 
+Most of the driver code is sadly in the main but at some point i got too lazy to keep everything nice and tidy. Promise i'll refactor it. 
 
 What's left to do : 
-* ## ADD A MAKEFILE YOU DUMBASS
+* ## ADD A MAKEFILE YOU DUMBASS🤦‍♂️ 
+* Add compiled files to gitignore 🤦‍♂️ 
 * code refactoring
 * translating tree's path into standings objects => easy : count the number of times each teams number appears in a path and update the scores accordingly
 * Counting "similar scenarios" I.E paths that ends with the same standings => Easy, just overload == operator for 2 standings 
@@ -20,6 +21,6 @@ What's left to do :
 * Taking tie breakers into account => Moderate, need to get every team with same score and then add matches accordingly
 
 possible features :
-* Compute a "win probability" for each team and each match according to previous match history 
+* Compute a "win probability" for each team and each match according to previous match history => moderately unlikely 
 * Scrap current standings from a website.
 * maybe implement the whole thing iteratively, because recursion is fun until it eats all of your 32 gb of ram 
