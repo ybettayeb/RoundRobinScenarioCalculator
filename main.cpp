@@ -12,9 +12,9 @@
 
 using namespace std;
 
-vector<team> Init()
+vector<team> Init(string file)
 {
-    ifstream fs("teams.csv");
+    ifstream fs(file);
 
     int w, l, id;
 
@@ -116,6 +116,10 @@ void vectorToArr(vector<vector<pair<int, int>>> &matches, vector<pair<int, int>>
         }
     }
 }
+void upgradeStandings(vector<int> path, vector<team> Teams){
+
+
+}
 std::vector<int> InOrderTree(std::vector<std::pair<int, int>> matches)
 {
     std::vector<int> treeTraversalInOrder;
@@ -140,7 +144,7 @@ unsigned int getLeafCount(Node *node)
                getLeafCount(node->right);
 }
 
-void printAllPaths(Node *node, vector<int> &path)
+void printAllPaths(Node *node, vector<int> &path, vector<vector<int>> &paths)
 {
 
     if (node == NULL)
@@ -150,24 +154,26 @@ void printAllPaths(Node *node, vector<int> &path)
     path.push_back(stoi(node->history));
     if (node->left == NULL && node->right == NULL)
     { //if we're on a leaf
+        vector<int> curr;
         for (int data : path)
         {
-
-            cout << data << " ";
+            curr.push_back(data);
+            cout << data << " " ;
         }
+        paths.push_back(curr);
         cout << endl;
     }
-    printAllPaths(node->left, path);
-    printAllPaths(node->right, path);
+    printAllPaths(node->left, path, paths);
+    printAllPaths(node->right, path, paths);
 
-    path.pop_back(); // we remove the path since we just updated it with a longer one
+    path.pop_back(); // we remove the node since we're gonna branch of that 
 }
 
 int main(int argc, char *argv[])
 {
 
     vector<team> Teams;
-    Teams = Init(); // initializing the team array
+    Teams = Init(argv[1]); // initializing the team array
     vector<vector<pair<int, int>>> matches;
     vector<pair<int, int>> MatchesArr;
     vector<int> InOrderTraversal;
@@ -186,7 +192,8 @@ int main(int argc, char *argv[])
     Node *root = insertLevelOrder(InOrderTraversal, MatchesArr, root, 0, n, 1, cpt);
 
     vector<int> paths;
-    freopen("output.txt", "w", stdout);
-    printAllPaths(root, paths);
+    vector<vector<int>> actualPaths;
+    freopen("output.txt", "w",stdout);
+    printAllPaths(root, paths,actualPaths);
     fclose(stdout);
 }
