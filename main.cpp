@@ -9,6 +9,7 @@
 #include <string>
 #include <math.h>
 #include <cstdio>
+#include <map>
 
 using namespace std;
 
@@ -41,11 +42,12 @@ vector<team> Init(string file)
     }
     return Teams;
 }
-Node *newNode(std::pair<int, int> Match, std::string history)
+Node *newNode(std::pair<int, int> Match, int winner, int looser)
 {
     Node *node = new Node;
     node->Match = Match;
-    node->history = history;
+    node->winner = winner;
+    node->looser = looser;
     node->left = node->right = NULL;
     return (node);
 }
@@ -53,18 +55,24 @@ Node *newNode(std::pair<int, int> Match, std::string history)
 Node *insertLevelOrder(vector<int> inOrder, vector<pair<int, int>> matches, Node *root, int i, int n, int win, int &cpt)
 {
 
-    string winner = "";
+    int winner = 0;
+    int looser =0;
 
     if (i < n)
     {
         if (win == 1)
         {
 
-            winner = to_string(matches[inOrder[i]].first);
+            winner = matches[inOrder[i]].first;
+            looser = matches[inOrder[i]].second;
         }
         else
-            winner = to_string(matches[inOrder[i]].second);
-        Node *temp = newNode(matches[inOrder[i]], winner);
+        {
+            winner = matches[inOrder[i]].second;
+            looser = matches[inOrder[i]].first;
+        }
+
+        Node *temp = newNode(matches[inOrder[i]], winner,looser);
         root = temp;
         cout << "call number " << cpt << endl;
         cpt++;
@@ -116,9 +124,12 @@ void vectorToArr(vector<vector<pair<int, int>>> &matches, vector<pair<int, int>>
         }
     }
 }
-void upgradeStandings(vector<int> path, vector<team> Teams){
-
-
+standings updateStandings(vector<pair<int,int>> path, vector<team> Teams){
+    for (pair<int,int> match : path){
+        Teams[match.first].wins += 1;
+        Teams[match.second].losses += 1;
+    }
+    return standings(Teams);
 }
 std::vector<int> InOrderTree(std::vector<std::pair<int, int>> matches)
 {
@@ -144,21 +155,21 @@ unsigned int getLeafCount(Node *node)
                getLeafCount(node->right);
 }
 
-void printAllPaths(Node *node, vector<int> &path, vector<vector<int>> &paths)
+void printAllPaths(Node *node, vector<pair<int,int>> &path, vector<vector<pair<int,int>>> &paths)
 {
 
     if (node == NULL)
     {
         return;
     }
-    path.push_back(stoi(node->history));
+    path.push_back(make_pair(node->winner,node->looser));
     if (node->left == NULL && node->right == NULL)
     { //if we're on a leaf
-        vector<int> curr;
-        for (int data : path)
+        vector<pair<int,int>> curr;
+        for (pair<int,int> data : path)
         {
             curr.push_back(data);
-            cout << data << " " ;
+            // cout << data.first << " " ;
         }
         paths.push_back(curr);
         cout << endl;
@@ -168,7 +179,22 @@ void printAllPaths(Node *node, vector<int> &path, vector<vector<int>> &paths)
 
     path.pop_back(); // we remove the node since we're gonna branch of that 
 }
+void printOddsOfMakingItToPlayoffs(int cutoff,vector<standings> outcomes){
+    int count;
+    map <string,double> m;
+    int counts[outcomes[0].teams.size()] = {};
 
+    for(standings scenario: outcomes){
+        for(int i = 0; i < cutoff; i++){
+            counts[scenario.teams[i].id]++;
+        }      
+    }
+    for (int i = 0; i < outcomes[0].teams.size(); i++){
+    m[outcomes[0].teams[i].getName()] = counts[outcomes[0].teams[i].id]/outcomes.size();
+    cout << outcomes[0].teams[i].getName() << "'s of making it to top" << to_string(cutoff) << "are: " << to_string(m[outcomes[0].teams[i].getName()]) << endl;
+    }
+
+}
 int main(int argc, char *argv[])
 {
 
@@ -181,7 +207,7 @@ int main(int argc, char *argv[])
     standings std = standings(Teams);
     vector<pair<int, int>> slicedMatches;
 
-    // the main needs HUGE refactoring but kinda too lazy to do it RN, will do tomorrow
+    // the main needs HUGE refactoring but kinda too lazy to do it RN, will do tomorrow <- blatant lie from me from 2 days ago
     calcMatchPlanning(Teams, matches);
     vectorToArr(matches, MatchesArr);
 
@@ -191,9 +217,18 @@ int main(int argc, char *argv[])
     int cpt = 0;
     Node *root = insertLevelOrder(InOrderTraversal, MatchesArr, root, 0, n, 1, cpt);
 
-    vector<int> paths;
-    vector<vector<int>> actualPaths;
-    freopen("output.txt", "w",stdout);
+    vector<pair<int,int>> paths;
+    vector<vector<pair<int,int>>> actualPaths;
+    vector<standings> outcomes;
+    // freopen("output.txt", "w",stdout);
+
     printAllPaths(root, paths,actualPaths);
-    fclose(stdout);
+
+    for (vector<pair<int,int>> path : actualPaths){
+        outcomes.push_back(updateStandings(path,Teams)); 
+    }
+    printOddsOfMakingItToPlayoffs(6,outcomes);
+    // fclose(stdout);
+
+    return 0;
 }

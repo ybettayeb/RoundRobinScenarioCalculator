@@ -20,12 +20,12 @@
 //     int winner;
 //     Arc::Arc(Node::Node start,Node::Node end, int winner);
 // };
-Node::Node(std::pair<int,int>Match, std::string history){
-        this->Match = Match;
-        this->left = nullptr;
-        this->right = nullptr;
-        this->history += history;
-}
+// Node::Node(std::pair<int,int>Match, std::string history){
+//         this->Match = Match;
+//         this->left = nullptr;
+//         this->right = nullptr;
+//         // this->history += history;
+// }
 Node::Node() = default;
 // Arc::Arc(Node::Node start,Node::Node end,int winner){
 //     this->start = start;

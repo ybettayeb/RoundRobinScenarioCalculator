@@ -6,11 +6,11 @@
 
 struct Node {
     public:
-    std::string history;
+    int winner,looser;
     std::pair<int,int> Match;
     Node * left;
     Node * right;
-    Node(std::pair<int,int> Match,std::string history);
+    // Node(std::pair<int,int> Match);
     Node();
 
 };

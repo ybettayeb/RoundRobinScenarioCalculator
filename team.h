@@ -7,10 +7,11 @@ class team
     // static int counter;
 protected:
     std::string Name;
-    int id;
+
    
 
 public:
+    int id;
     int wins;
     int losses;
     team(std::string name);
